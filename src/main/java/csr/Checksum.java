@@ -23,29 +23,19 @@ public class Checksum {
 
     private static final String KEY = "4cPw3ZyC";
 
-    public String computeHmac(File file, String oldCrc, String newCrc) {
+    public String computeHmac(String content) {
         byte[] hmacSha1 = null;
-        try (BufferedReader br = new BufferedReader(new FileReader(file))) {
+        try {
             Mac mac = Mac.getInstance("HmacSHA1");
             SecretKeySpec secretKeySpec = new SecretKeySpec(KEY.getBytes(), "HmacSHA1");
             mac.init(secretKeySpec);
-            String content = br.readLine();
-            hmacSha1 = mac.doFinal(getReplace(oldCrc, newCrc, content).getBytes());
+            hmacSha1 = mac.doFinal(content.getBytes());
         } catch (NoSuchAlgorithmException
-                | InvalidKeyException
-                | IOException e) {
-            log.error("Error crypting file {}", file.getName(), e);
+                | InvalidKeyException e) {
+            log.error("Error crypting file", e);
 
         }
         return hex(hmacSha1);
-    }
-
-    private String getReplace(String oldCrc, String newCrc, String content) {
-        if (oldCrc != null) {
-            return content.replace(oldCrc, newCrc);
-        } else {
-            return content;
-        }
     }
 
     private String hex(byte[] bytes) {
@@ -58,15 +48,8 @@ public class Checksum {
 
     public String computeCrc32(File file) {
         CRC32 crc = new CRC32();
-        try (InputStream inputStream = new BufferedInputStream(new FileInputStream(file));) {
-            int cnt;
-            while ((cnt = inputStream.read()) != -1) {
-                crc.update(cnt);
-            }
-        } catch (IOException e) {
-            log.error("Error computing crc32 for file {}", file.getName(), e);
-        }
+        String content = new Minifier().minifyContent(file);
+        crc.update(content.getBytes());
         return String.valueOf(crc.getValue());
     }
-
 }

@@ -1,11 +1,6 @@
 package csr;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Test;
-
-import java.io.File;
-import java.io.IOException;
 
 public class CompressTest {
 
@@ -13,7 +8,7 @@ public class CompressTest {
 
     @Test
     public void testZipAll() throws Exception {
-        compress.zipAll();
+        compress.zipAll("./");
     }
 
 }

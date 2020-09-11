@@ -12,13 +12,14 @@ public class ChecksumTest {
 
     @Test
     public void testComputeHmac() throws Exception {
-        String actual = checksum.computeHmac(new File("C:/Dev/temp/csr/Backup/nsb.test"), null, null);
-        assertThat(actual).isEqualTo("2b5955bb727ebe813608fc9c5028a5660e0016e3");
+        String content = new Minifier().minifyContent(new File("src/test/resources/nsb.json"));
+        String actual = checksum.computeHmac(content);
+        assertThat(actual).isEqualTo("b5cfe3bdaea824b98d14772f148ac1466ef37620");
     }
 
     @Test
     public void testComputeCrc32() throws Exception {
-        assertThat(checksum.computeCrc32(new File("C:/Dev/temp/csr/Backup/nsb.test"))).isEqualTo("2408858343");
+        assertThat(checksum.computeCrc32(new File("src/test/resources/nsb.json"))).isEqualTo("4289034266");
     }
 
 }

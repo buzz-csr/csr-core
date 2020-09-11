@@ -1,0 +1,59 @@
+
+{
+    "userid": "74734736740",
+    "gold": 0,
+    "cash": 0,
+    "AMPart_green": 0,
+    "AMPart_blue": 0,
+    "AMPart_red": 0,
+    "AMPart_yellow": 0,
+    "supernitrous": 0,
+    "nonsecureblobHash": "999505360",
+    "lastsuccessfulnonsecureblobHash": "999505360",
+    "secureblobHash": "3378664692",
+    "lastsuccessfulsecureblobHash": "3378664692",
+    "nonsecureblobhash": "999505360",
+    "gamecenterid": "",
+    "facebookid": "",
+    "facebook_access_token": "",
+    "facebook_access_token_expiration": 0,
+    "abtest_branch_name": "2_13_0_Release",
+    "banned": false,
+    "GachaKeys_Bronze": 0,
+    "GachaKeys_Silver": 0,
+    "GachaKeys_Gold": 0,
+    "IAPCars": [
+    ],
+    "HasBeenRegisteredOnServer": true,
+    "DetectedTamperedAccount": false,
+    "profileSaveHashes": [
+        {
+            "playerID": "74734736740",
+            "CRC": "469477024"
+        }
+    ],
+    "serverBlob": {
+        "IAPCash": 0,
+        "IAPGold": 0,
+        "IAPSuperNitrous": 0,
+        "IAPCars": [
+        ],
+        "IAPGachaKeys": 0,
+        "IAPKeys_Gold": 0,
+        "IAPKeys_Silver": 0,
+        "IAPKeys_Bronze": 0,
+        "player_rp": 0,
+        "player_rr": 0,
+        "crew_fuel_time": 0,
+        "banned": 0,
+        "banningReason": "",
+        "gdpr": 0,
+        "appRequestAcceptedFBIDs": [
+        ],
+        "appRequestProcessedFBIDs": [
+        ],
+        "RestorationGenuinePartsEarned": 0,
+        "RestorationGenuinePartsSpent": 0,
+        "aaid_on_first_run": "38a15049-da72-445c-a8c9-182c5f30d457"
+    }
+}
