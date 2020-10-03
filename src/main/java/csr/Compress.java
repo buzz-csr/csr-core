@@ -22,6 +22,7 @@ public class Compress {
     private static final String FINAL_FOLDER = "Final";
 
     public void zipAll(String path) {
+        checkFinalDir(path);
         zip(path, "nsb.json", "nsb", null, null);
         zip(path, "scb.json", "scb", null, null);
         zip(path, "trb.json", "trb", null, null);
@@ -34,6 +35,13 @@ public class Compress {
                     FilenameUtils.removeExtension(numberedFile.getName()), oldCrc, crc32);
         }
 
+    }
+
+    private void checkFinalDir(String path) {
+        File finalDir = new File(path + FINAL_FOLDER);
+        if (!finalDir.exists()) {
+            finalDir.mkdir();
+        }
     }
 
     private File getNumberedFile(String path) {
@@ -50,18 +58,18 @@ public class Compress {
     public void zip(String path, String fileName, String targetName, String oldCrc, String newCrc) {
         File jsonDirectory = new File(path + JSON_FOLDER);
 
-        if(jsonDirectory.listFiles() != null){
+        if (jsonDirectory.listFiles() != null) {
             File file = Arrays.stream(jsonDirectory.listFiles())
                     .filter(x -> x.getName().equals(fileName))
                     .findFirst()
                     .orElse(null);
 
-            if(file != null){
+            if (file != null) {
                 String tempFile = createFilWithChecksum(path, fileName, targetName, file, oldCrc, newCrc);
                 zipTempFile(path, fileName, targetName, tempFile);
                 deleteTempFile(tempFile);
             }
-        }else{
+        } else {
             log.info("Any file to compress");
         }
 
@@ -93,7 +101,7 @@ public class Compress {
         Checksum checksum = new Checksum();
 
         String content = new Minifier().minifyContent(file);
-        if(oldCrc != null){
+        if (oldCrc != null) {
             content = content.replace(oldCrc, newCrc);
         }
         String hmacSha1 = checksum.computeHmac(content);

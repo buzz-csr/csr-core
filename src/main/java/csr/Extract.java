@@ -76,6 +76,9 @@ public class Extract {
     }
 
     private String unzip(File jsonDirectory, File file) {
+        if (!jsonDirectory.exists()) {
+            jsonDirectory.mkdir();
+        }
         String fileName = jsonDirectory.getAbsolutePath() + "/" + file.getName();
 
         try (FileInputStream fis = new FileInputStream(file.getAbsolutePath());
