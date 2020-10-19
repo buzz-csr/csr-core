@@ -1,16 +1,17 @@
 package csr;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 
 import javax.json.Json;
 import javax.json.JsonArray;
 import javax.json.JsonObject;
 import javax.json.JsonReader;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class CrcExtractor {
 
@@ -29,7 +30,7 @@ public class CrcExtractor {
                 }
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            log.error("Error extracting crc", e);
         }
         return oldCrc;
     }

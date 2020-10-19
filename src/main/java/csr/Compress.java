@@ -1,6 +1,9 @@
 package csr;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.nio.file.Files;
 import java.util.Arrays;
 import java.util.zip.GZIPOutputStream;
@@ -8,11 +11,6 @@ import java.util.zip.GZIPOutputStream;
 import org.apache.commons.io.FilenameUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import javax.json.Json;
-import javax.json.JsonArray;
-import javax.json.JsonObject;
-import javax.json.JsonReader;
 
 public class Compress {
 
@@ -31,8 +29,7 @@ public class Compress {
         if (numberedFile != null && numberedFile.exists()) {
             String oldCrc = new CrcExtractor().readFromJson(numberedFile);
             String crc32 = new Checksum().computeCrc32(new File(path + JSON_FOLDER + "/nsb.json"));
-            zip(path, numberedFile.getName(),
-                    FilenameUtils.removeExtension(numberedFile.getName()), oldCrc, crc32);
+            zip(path, numberedFile.getName(), FilenameUtils.removeExtension(numberedFile.getName()), oldCrc, crc32);
         }
 
     }
@@ -47,12 +44,11 @@ public class Compress {
     private File getNumberedFile(String path) {
         File jsonDirectory = new File(path + JSON_FOLDER);
 
-        File file = Arrays.stream(jsonDirectory.listFiles())
-                .filter(x -> !"nsb.json".equals(x.getName()) && !"scb.json".equals(x.getName()) && !"trb.json".equals(x.getName()))
+        return Arrays.stream(jsonDirectory.listFiles())
+                .filter(x -> !"nsb.json".equals(x.getName()) && !"scb.json".equals(x.getName())
+                        && !"trb.json".equals(x.getName()))
                 .findFirst()
                 .orElse(null);
-
-        return file;
     }
 
     public void zip(String path, String fileName, String targetName, String oldCrc, String newCrc) {
@@ -85,8 +81,8 @@ public class Compress {
 
     private void zipTempFile(String path, String fileName, String targetName, String tempFile) {
         try (FileInputStream fis = new FileInputStream(tempFile);
-             FileOutputStream fos = new FileOutputStream(path + FINAL_FOLDER + "/" + targetName);
-             GZIPOutputStream gzipOS = new GZIPOutputStream(fos);) {
+                FileOutputStream fos = new FileOutputStream(path + FINAL_FOLDER + "/" + targetName);
+                GZIPOutputStream gzipOS = new GZIPOutputStream(fos);) {
             byte[] buffer = new byte[1024];
             int len;
             while ((len = fis.read(buffer)) != -1) {
@@ -97,7 +93,8 @@ public class Compress {
         }
     }
 
-    private String createFilWithChecksum(String path, String fileName, String targetName, File file, String oldCrc, String newCrc) {
+    private String createFilWithChecksum(String path, String fileName, String targetName, File file, String oldCrc,
+            String newCrc) {
         Checksum checksum = new Checksum();
 
         String content = new Minifier().minifyContent(file);
