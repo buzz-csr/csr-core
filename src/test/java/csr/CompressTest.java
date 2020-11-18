@@ -8,7 +8,7 @@ public class CompressTest {
 
     @Test
     public void testZipAll() throws Exception {
-        compress.zipAll("./");
+        compress.zipAll("./src/test/resources/");
     }
 
 }
